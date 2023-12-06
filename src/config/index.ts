@@ -1,8 +1,8 @@
-import path from 'path';
-require('dotenv').config({ path: path.join(process.cwd(), '.env') })
+import path from "path";
+require("dotenv").config({ path: path.join(process.cwd(), ".env") });
 
 export default {
-    jwt: {
-        secret: process.env.JWT_SIGN
-    }
-}
+    port: process.env.PORT,
+    mongodb_url: process.env.MONGODB_URL,
+    jwt: { secret: process.env.JWT_SIGN },
+};

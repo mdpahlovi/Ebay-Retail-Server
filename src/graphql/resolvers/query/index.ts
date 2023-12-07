@@ -1,14 +1,6 @@
-const books = [
-    {
-        title: "The Awakening",
-        author: "Kate Chopin",
-    },
-    {
-        title: "City of Glass",
-        author: "Pahlovi",
-    },
-];
+import User from "../../../models/user";
 
 export const Query = {
-    books: () => books,
+    users: async () => await User.find({}),
+    user: async (parent: any, args: { id: string }) => await User.findById(args.id),
 };

@@ -3,11 +3,16 @@ export const typeDefs = `#graphql
         id: ID
         name: String
         email: String
+        phone: String
         image: String
         role: String
         isVerify: Boolean
         createdAt: String
         updatedAt: String
+    }
+
+    type Token {
+        token: String
     }
 
     type Query {
@@ -16,6 +21,7 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
-        createUser(name: String, email: String, image: String, role: String, isVerify: Boolean): User
+        login(email: String): Token
+        register(name: String, email: String, image: String, isVerify: Boolean): Token
     }
 `;

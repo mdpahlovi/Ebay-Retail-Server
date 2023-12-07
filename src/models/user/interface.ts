@@ -3,8 +3,9 @@ import { Document, Model } from "mongoose";
 export interface IUser extends Document {
     name: string;
     email: string;
+    phone: string;
     image: string;
-    role: string;
+    role: "buyer" | "seller" | "admin";
     isVerify: boolean;
 }
 

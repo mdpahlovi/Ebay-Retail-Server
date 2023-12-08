@@ -1,5 +1,5 @@
 import Category from "../../../models/category";
-import { Delete, Token, Update } from "../../../types";
+import { Delete, Update } from "../../../types";
 
 interface Category {
     name: String;

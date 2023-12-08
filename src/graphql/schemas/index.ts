@@ -27,8 +27,7 @@ export const typeDefs = `#graphql
         original_price: Float,
         condition: String,
         description: String,
-        location: String,
-        phone: String,
+        location: String,,
         purchase_date: String,
         seller: User,
         advertised: Boolean,
@@ -54,6 +53,10 @@ export const typeDefs = `#graphql
 
         categories: [Category]
         category(id: ID!): [Product]
+
+        products: [Product]
+        product(id: ID!): Product
+        advertise: [Product]
     }
 
     type Mutation {
@@ -66,10 +69,26 @@ export const typeDefs = `#graphql
         createCategory(name: String!, image: String!): Category
         updateCategory(id: ID!, data: CategoryInput!): Category
         deleteCategory(id: ID!): Category
+
+        createProduct(category: String!, name: String!, image: String!, resale_price: Float!, original_price: Float!, condition: String!, description: String!, location: String!, purchase_date: String!): Product
+        updateProduct(id: ID!, data: ProductInput!): Product
+        deleteProduct(id: ID!): Product
     }
 
     input CategoryInput {
         name: String
         image: String
+    }
+
+    input ProductInput {
+        category: String,
+        name: String,
+        image: String,
+        resale_price: Float,
+        original_price: Float,
+        condition: String,
+        description: String,
+        location: String,
+        purchase_date: String,
     }
 `;

@@ -11,7 +11,6 @@ export interface IProduct extends Document {
     condition: string;
     description: string;
     location: string;
-    phone: string;
     purchase_date: string;
     seller: Types.ObjectId | IUser;
     advertised: boolean;

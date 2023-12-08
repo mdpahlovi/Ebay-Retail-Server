@@ -12,7 +12,6 @@ const productSchema = new Schema<IProduct>(
         condition: String,
         description: String,
         location: String,
-        phone: String,
         purchase_date: Date,
         seller: { type: ObjectId, ref: "user" },
         advertised: Boolean,

@@ -1,6 +1,7 @@
 import User from "../../models/user";
 import Category from "../../models/category";
 import Product from "../../models/product";
+import Booking from "../../models/booking";
 import { Token } from "../../types";
 
 export const Query = {
@@ -19,4 +20,14 @@ export const Query = {
         await Product.find({ seller: token?.id }).populate(["category", "seller"]),
     product: async (parent: any, { id }: { id: string }) => await Product.findById(id).populate(["category", "seller"]),
     advertise: async () => await Product.find({ advertised: true }).populate(["category", "seller"]),
+
+    bookings: async (parent: any, args: any, { token }: Token) => {
+        switch (token?.role) {
+            case "buyer":
+                return await Booking.find({ buyer: token?.id }).populate(["buyer", "seller", "product"]);
+            case "seller":
+                return await Booking.find({ seller: token?.id }).populate(["buyer", "seller", "product"]);
+        }
+    },
+    booking: async (parent: any, { id }: { id: string }) => await Product.findById(id).populate(["buyer", "seller", "product"]),
 };

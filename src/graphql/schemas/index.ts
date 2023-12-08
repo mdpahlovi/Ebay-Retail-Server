@@ -16,30 +16,36 @@ export const typeDefs = `#graphql
         name: String
         image: String
         total: Int
+        createdAt: String
+        updatedAt: String
     }
 
     type Product {
         id: ID
-        category: Category,
-        name: String,
-        image: String,
-        resale_price: Float,
-        original_price: Float,
-        condition: String,
-        description: String,
-        location: String,,
-        purchase_date: String,
-        seller: User,
-        advertised: Boolean,
-        isBooked: Boolean,
+        category: Category
+        name: String
+        image: String
+        resale_price: Float
+        original_price: Float
+        condition: String
+        description: String
+        location: String
+        purchase_date: String
+        seller: User
+        advertised: Boolean
+        isBooked: Boolean
+        createdAt: String
+        updatedAt: String
     }
 
     type Booking {
-        date: String,
-        location: String,
-        buyer: User,
-        seller: User,
-        product: Product,
+        date: String
+        location: String
+        buyer: User
+        seller: User
+        product: Product
+        createdAt: String
+        updatedAt: String
     }
 
     type Token {
@@ -57,6 +63,9 @@ export const typeDefs = `#graphql
         products: [Product]
         product(id: ID!): Product
         advertise: [Product]
+
+        bookings: [Booking]
+        booking(id: ID!): Booking
     }
 
     type Mutation {
@@ -73,6 +82,10 @@ export const typeDefs = `#graphql
         createProduct(category: String!, name: String!, image: String!, resale_price: Float!, original_price: Float!, condition: String!, description: String!, location: String!, purchase_date: String!): Product
         updateProduct(id: ID!, data: ProductInput!): Product
         deleteProduct(id: ID!): Product
+
+        createBooking(date: String!, location: String!, buyer: String!, seller: String!, product: String!): Booking
+        updateBooking(id: ID!, data: BookingInput!): Booking
+        deleteBooking(id: ID!): Booking
     }
 
     input CategoryInput {
@@ -81,14 +94,19 @@ export const typeDefs = `#graphql
     }
 
     input ProductInput {
-        category: String,
-        name: String,
-        image: String,
-        resale_price: Float,
-        original_price: Float,
-        condition: String,
-        description: String,
-        location: String,
-        purchase_date: String,
+        category: String
+        name: String
+        image: String
+        resale_price: Float
+        original_price: Float
+        condition: String
+        description: String
+        location: String
+        purchase_date: String
+    }
+
+    input BookingInput {
+        date: String 
+        location: String
     }
 `;

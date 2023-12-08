@@ -9,4 +9,4 @@ const categorySchema = new Schema<ICategory>(
     { timestamps: true, versionKey: false }
 );
 
-export default mongoose.model<ICategory, CategoryModel>("blog", categorySchema);
+export default mongoose.model<ICategory, CategoryModel>("category", categorySchema);

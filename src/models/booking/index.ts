@@ -13,4 +13,4 @@ const bookingSchema = new Schema<IBooking>(
     { timestamps: true, versionKey: false }
 );
 
-export default mongoose.model<IBooking, BookingModel>("blog", bookingSchema);
+export default mongoose.model<IBooking, BookingModel>("booking", bookingSchema);

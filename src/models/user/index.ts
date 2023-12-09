@@ -8,6 +8,8 @@ const userSchema = new Schema<IUser>(
         phone: { type: String },
         image: { type: String, default: "https://shorturl.at/jnruF" },
         role: { type: String, enum: ["buyer", "seller", "admin"], default: "buyer" },
+        provider: { type: String, enum: ["custom", "google", "github"], default: "custom" },
+        password: { type: String },
         isVerify: { type: Boolean, default: false },
     },
     { timestamps: true, versionKey: false }

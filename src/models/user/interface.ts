@@ -6,6 +6,8 @@ export interface IUser extends Document {
     phone: string;
     image: string;
     role: "buyer" | "seller" | "admin";
+    provider: "custom" | "google" | "github";
+    password: string;
     isVerify: boolean;
 }
 

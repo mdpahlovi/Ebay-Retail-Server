@@ -4,7 +4,9 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts"
+        "build": "tsc",
+        "start": "node ./dist",
+        "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' ./src"
     },
     "dependencies": {
         "@apollo/server": "^4.9.5",

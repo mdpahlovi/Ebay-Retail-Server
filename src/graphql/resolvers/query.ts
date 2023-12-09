@@ -9,25 +9,20 @@ export const Query = {
     allSeller: async () => await User.find({ role: "seller" }),
     user: async (parent: any, { id }: { id: string }) => await User.findById(id),
 
-    categories: async () =>
-        await Category.aggregate([
-            { $lookup: { from: "products", localField: "_id", foreignField: "category", as: "products" } },
-            { $project: { id: "$_id", name: 1, image: 1, total: { $size: "$products" } } },
-        ]),
-    category: async (parent: any, { id }: { id: string }) => await Product.find({ category: id }).populate(["category", "seller"]),
+    categories: async () => await Category.find({}),
+    category: async (parent: any, { id }: { id: string }) => await Product.find({ category: id }),
 
-    products: async (parent: any, args: any, { token }: Token) =>
-        await Product.find({ seller: token?.id }).populate(["category", "seller"]),
-    product: async (parent: any, { id }: { id: string }) => await Product.findById(id).populate(["category", "seller"]),
-    advertise: async () => await Product.find({ advertised: true }).populate(["category", "seller"]),
+    products: async (parent: any, args: any, { token }: Token) => await Product.find({ seller: token?.id }),
+    product: async (parent: any, { id }: { id: string }) => await Product.findById(id),
+    advertise: async () => await Product.find({ advertised: true }),
 
     bookings: async (parent: any, args: any, { token }: Token) => {
         switch (token?.role) {
             case "buyer":
-                return await Booking.find({ buyer: token?.id }).populate(["buyer", "seller", "product"]);
+                return await Booking.find({ buyer: token?.id });
             case "seller":
-                return await Booking.find({ seller: token?.id }).populate(["buyer", "seller", "product"]);
+                return await Booking.find({ seller: token?.id });
         }
     },
-    booking: async (parent: any, { id }: { id: string }) => await Product.findById(id).populate(["buyer", "seller", "product"]),
+    booking: async (parent: any, { id }: { id: string }) => await Product.findById(id),
 };

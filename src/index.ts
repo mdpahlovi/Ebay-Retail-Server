@@ -8,6 +8,7 @@ import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import { v2 as cloudinary } from "cloudinary";
 
 import { Token } from "./types";
 import { typeDefs } from "./graphql/schemas";
@@ -26,6 +27,7 @@ const bootstrap = async () => {
     });
     await server.start();
     await mongoose.connect(mongodb_url!);
+    cloudinary.config({ cloud_name: config.cloud.name, api_key: config.cloud.api_key, api_secret: config.cloud.api_secret });
 
     app.use(
         cors(),
@@ -33,6 +35,7 @@ const bootstrap = async () => {
         expressMiddleware(server, {
             context: async ({ req }): Promise<Token> => {
                 const token = await jwtHelper.decodeToken(req.headers.authorization!);
+
                 return { token };
             },
         })

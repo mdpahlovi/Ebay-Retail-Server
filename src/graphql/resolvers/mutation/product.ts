@@ -1,5 +1,6 @@
 import Product from "../../../models/product";
-import { Delete, Update } from "../../../types";
+import { Delete, Token, Update } from "../../../types";
+import { uploadImage } from "../../../utils/uploadImage";
 
 interface Product {
     category: string;
@@ -14,10 +15,15 @@ interface Product {
 }
 
 export const ProductMutation = {
-    createProduct: async (parent: any, args: Product) => {
-        const newProduct = new Product(args);
+    createProduct: async (parent: any, args: Product, { token }: Token) => {
+        if (args?.image) args.image = await uploadImage(args.image, "Product");
+        const data = { ...args, seller: token?.id };
+        const newProduct = new Product(data);
         return await newProduct.save();
     },
-    updateProduct: async (parent: any, { id, data }: Update<Product>) => await Product.findByIdAndUpdate(id, data, { new: true }),
+    updateProduct: async (parent: any, { id, data }: Update<Product>) => {
+        if (data?.image) data.image = await uploadImage(data.image, "Product");
+        return await Product.findByIdAndUpdate(id, data, { new: true });
+    },
     deleteProduct: async (parent: any, { id }: Delete) => await Product.findByIdAndDelete(id),
 };

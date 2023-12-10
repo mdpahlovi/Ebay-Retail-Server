@@ -76,7 +76,7 @@ export const typeDefs = `#graphql
         login(email: String!, password: String!): Token
         register(name: String!, email: String!, password: String!): Token
 
-        updateUser(name: String, phone: String, image: String, role: String, isVerify: Boolean): User
+        updateUser(id: ID!, data: UserInput!): User
         deleteUser(id: ID!): User
 
         createCategory(name: String!, image: String!): Category
@@ -91,6 +91,14 @@ export const typeDefs = `#graphql
         updateBooking(id: ID!, data: BookingInput!): Booking
         deleteBooking(id: ID!): Booking
     }
+
+    input UserInput{
+        name: String
+        phone: String
+        image: String
+        role: String
+        isVerify: Boolean
+    }   
 
     input CategoryInput {
         name: String

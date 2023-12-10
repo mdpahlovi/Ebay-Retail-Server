@@ -62,7 +62,7 @@ export const typeDefs = `#graphql
         user(id: ID!): User 
 
         categories: [Category]
-        category(id: ID!): [Product]
+        category(id: ID!): Category
 
         products: [Product]
         product(id: ID!): Product

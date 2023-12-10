@@ -10,7 +10,7 @@ export const Query = {
     user: async (parent: any, { id }: { id: string }) => await User.findById(id),
 
     categories: async () => await Category.find({}),
-    category: async (parent: any, { id }: { id: string }) => await Product.find({ category: id }),
+    category: async (parent: any, { id }: { id: string }) => await Category.findById(id),
 
     products: async (parent: any, args: any, { token }: Token) => await Product.find({ seller: token?.id }),
     product: async (parent: any, { id }: { id: string }) => await Product.findById(id),
@@ -24,5 +24,5 @@ export const Query = {
                 return await Booking.find({ seller: token?.id });
         }
     },
-    booking: async (parent: any, { id }: { id: string }) => await Product.findById(id),
+    booking: async (parent: any, { id }: { id: string }) => await Booking.findById(id),
 };

@@ -5,11 +5,14 @@
     "license": "MIT",
     "scripts": {
         "build": "tsc",
-        "start": "node ./dist",
-        "dev": "nodemon --watch './**/*.ts' --exec 'ts-node' ./src"
+        "start": "nodemon --exec babel-node -- ./dist"
     },
     "dependencies": {
         "@apollo/server": "^4.9.5",
+        "@babel/cli": "^7.23.4",
+        "@babel/core": "^7.23.6",
+        "@babel/node": "^7.22.19",
+        "@babel/preset-env": "^7.23.6",
         "@types/bcrypt": "^5.0.2",
         "@types/body-parser": "^1.19.5",
         "@types/cors": "^2.8.17",
@@ -26,9 +29,5 @@
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.3",
         "typescript": "^5.3.3"
-    },
-    "devDependencies": {
-        "nodemon": "^3.0.2",
-        "ts-node-dev": "^2.0.0"
     }
 }

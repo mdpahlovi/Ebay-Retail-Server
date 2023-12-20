@@ -14,33 +14,38 @@ import { Token } from "./types";
 import { typeDefs } from "./graphql/schemas";
 import { resolvers } from "./graphql/resolvers";
 import { jwtHelper } from "./utils/jwtHelper";
+import corsOptions from "./utils/corsOptions";
 
-const { port, mongodb_url } = config;
 const app = express();
 const httpServer = http.createServer(app);
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+});
 
 const bootstrap = async () => {
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    });
     await server.start();
-    await mongoose.connect(mongodb_url!);
+    await mongoose.connect(config.mongodb_url!);
+
     cloudinary.config({ cloud_name: config.cloud.name, api_key: config.cloud.api_key, api_secret: config.cloud.api_secret });
 
     app.use(
-        cors(),
-        bodyParser.json(),
+        "/graphql",
+        cors(corsOptions),
+        express.json(),
+        bodyParser.json({ limit: "64mb" }),
         expressMiddleware(server, {
             context: async ({ req }): Promise<Token> => {
-                const token = await jwtHelper.decodeToken(req.headers.authorization!);
-
+                const cookie = req.headers.cookie;
+                const token = await jwtHelper.decodeToken(cookie ? cookie.split("=")[1] : "");
                 return { token };
             },
         })
     );
-    app.listen({ port }, () => console.log(`🚀 Server ready at http://localhost:${4000}`));
+
+    await new Promise<void>((resolve) => httpServer.listen({ port: config.port }, resolve));
+    console.log(`🚀 Server ready at http://localhost:${config.port}/graphql`);
 };
 
 bootstrap();

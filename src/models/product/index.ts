@@ -15,7 +15,6 @@ const productSchema = new Schema<IProduct>(
         purchase_date: Date,
         seller: { type: ObjectId, ref: "user" },
         advertised: Boolean,
-        isBooked: Boolean,
     },
     { timestamps: true }
 );

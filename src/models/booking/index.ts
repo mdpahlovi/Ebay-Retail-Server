@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const bookingSchema = new Schema<IBooking>(
     {
-        date: String,
+        date: Date,
         location: String,
         buyer: { type: ObjectId, ref: "user" },
         seller: { type: ObjectId, ref: "user" },

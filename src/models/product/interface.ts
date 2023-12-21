@@ -14,7 +14,6 @@ export interface IProduct extends Document {
     purchase_date: string;
     seller: Types.ObjectId | IUser;
     advertised: boolean;
-    isBooked: boolean;
 }
 
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

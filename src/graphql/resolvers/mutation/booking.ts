@@ -1,17 +1,16 @@
 import Booking from "../../../models/booking";
-import { Delete, Update } from "../../../types";
+import { Delete, Token, Update } from "../../../types";
 
 interface Booking {
     date: string;
     location: string;
-    buyer: string;
     seller: string;
     product: string;
 }
 
 export const BookingMutation = {
-    createBooking: async (parent: any, args: Booking) => {
-        const newBooking = new Booking(args);
+    createBooking: async (parent: any, args: Booking, { token }: Token) => {
+        const newBooking = new Booking({ ...args, buyer: token.id });
         return await newBooking.save();
     },
     updateBooking: async (parent: any, { id, data }: Update<Booking>) => await Booking.findByIdAndUpdate(id, data, { new: true }),

@@ -36,13 +36,13 @@ export const typeDefs = `#graphql
         purchase_date: String
         seller: User
         advertised: Boolean
-        isBooked: Boolean
         booking: Booking
         createdAt: String
         updatedAt: String
     }
 
     type Booking {
+        id: ID
         date: String
         location: String
         buyer: User
@@ -87,7 +87,7 @@ export const typeDefs = `#graphql
         updateProduct(id: ID!, data: ProductInput!): Product
         deleteProduct(id: ID!): Product
 
-        createBooking(date: String!, location: String!, buyer: String!, seller: String!, product: String!): Booking
+        createBooking(date: String!, location: String!, seller: String!, product: String!): Booking
         updateBooking(id: ID!, data: BookingInput!): Booking
         deleteBooking(id: ID!): Booking
     }

@@ -1,6 +1,11 @@
 export type JwtPayload = {
     id: string;
+    name: string;
+    email: string;
+    phone: string;
+    image: string;
     role: string;
+    isVerify: boolean;
 } | null;
 
 export type Token = {

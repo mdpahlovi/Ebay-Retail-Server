@@ -1,9 +1,8 @@
-import { IBooking } from "../../models/booking/interface";
-import User from "../../models/user";
-import Product from "../../models/product";
+import { userLoader } from "../../dataLoaders/userLoader";
+import { productLoader } from "../../dataLoaders/booking/productLoader";
 
 export const Booking = {
-    buyer: async ({ buyer }: IBooking) => await User.findById(buyer),
-    seller: async ({ seller }: IBooking) => await User.findById(seller),
-    product: async ({ product }: IBooking) => await Product.findById(product),
+    buyer: async ({ buyer }: { buyer: string }) => await userLoader.load(buyer),
+    seller: async ({ seller }: { seller: string }) => await userLoader.load(seller),
+    product: async ({ product }: { product: string }) => await productLoader.load(product),
 };

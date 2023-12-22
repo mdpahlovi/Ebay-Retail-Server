@@ -1,10 +1,9 @@
-import { IProduct } from "../../models/product/interface";
-import Category from "../../models/category";
-import User from "../../models/user";
-import booking from "../../models/booking";
+import { categoryLoader } from "../../dataLoaders/product/categoryLoader";
+import { userLoader } from "../../dataLoaders/userLoader";
+import { bookingLoader } from "../../dataLoaders/product/isBookingLoader";
 
 export const Product = {
-    category: async ({ category }: IProduct) => await Category.findById(category),
-    seller: async ({ seller }: IProduct) => await User.findById(seller),
-    isBooked: async ({ _id }: IProduct) => ((await booking.exists({ product: _id })) ? true : false),
+    category: async ({ category }: { category: string }) => categoryLoader.load(category),
+    seller: async ({ seller }: { seller: string }) => userLoader.load(seller),
+    isBooked: async ({ _id }: { _id: string }) => bookingLoader.load(_id),
 };

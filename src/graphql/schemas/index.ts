@@ -7,8 +7,8 @@ export const typeDefs = `#graphql
         image: String
         role: String
         isVerify: Boolean
-        products: [Product]
-        bookings: [Booking]
+        totalProduct: Int
+        totalBooking: Int
         createdAt: String
         updatedAt: String
     }
@@ -36,7 +36,7 @@ export const typeDefs = `#graphql
         purchase_date: String
         seller: User
         advertised: Boolean
-        booking: Booking
+        isBooked: Boolean
         createdAt: String
         updatedAt: String
     }

@@ -6,5 +6,5 @@ import booking from "../../models/booking";
 export const Product = {
     category: async ({ category }: IProduct) => await Category.findById(category),
     seller: async ({ seller }: IProduct) => await User.findById(seller),
-    booking: async ({ _id }: IProduct) => await booking.findOne({ product: _id }),
+    isBooked: async ({ _id }: IProduct) => ((await booking.exists({ product: _id })) ? true : false),
 };

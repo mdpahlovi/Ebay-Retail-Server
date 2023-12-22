@@ -2,6 +2,7 @@ import User from "../../../models/user";
 import { compare, hash } from "bcrypt";
 import { GraphQLError } from "graphql";
 import { jwtHelper } from "../../../utils/jwtHelper";
+import { IUser } from "../../../models/user/interface";
 
 interface Login {
     email: string;
@@ -11,6 +12,12 @@ interface Register {
     name: string;
     email: string;
     password: string;
+}
+interface SocialLogin {
+    name: String;
+    email: String;
+    image: String;
+    provider: String;
 }
 
 export const Auth = {
@@ -36,6 +43,20 @@ export const Auth = {
 
         // Generate Token
         const token = jwtHelper.encodeToken(newUserData);
+        return { token };
+    },
+    socialLogin: async (parent: any, { name, email, image, provider }: SocialLogin) => {
+        let user: IUser;
+        const isExist = await User.findOne({ email });
+
+        if (isExist) {
+            user = isExist;
+        } else {
+            const newUser = new User({ name, email, image, provider, isVerify: true });
+            user = await newUser.save();
+        }
+
+        const token = jwtHelper.encodeToken(user);
         return { token };
     },
 };

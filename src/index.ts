@@ -8,6 +8,7 @@ import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 
 import { Token } from "./types";
@@ -32,13 +33,14 @@ const bootstrap = async () => {
 
     app.use(
         "/graphql",
-        cors(corsOptions),
         express.json(),
+        cookieParser(),
+        cors(corsOptions),
         bodyParser.json({ limit: "64mb" }),
         expressMiddleware(server, {
-            context: async ({ req }): Promise<Token> => {
-                const cookie = req.headers.cookie;
-                const token = await jwtHelper.decodeToken(cookie ? cookie.split("=")[1] : "");
+            context: async ({ req, res }): Promise<Token> => {
+                const cookie = req.cookies["ebay-retail-auth"];
+                const token = await jwtHelper.decodeToken(cookie ? cookie : "");
                 return { token };
             },
         })

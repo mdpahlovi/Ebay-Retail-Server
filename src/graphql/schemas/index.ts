@@ -75,6 +75,7 @@ export const typeDefs = `#graphql
     type Mutation {
         login(email: String!, password: String!): Token
         register(name: String!, email: String!, password: String!): Token
+        socialLogin(name: String!, email: String!, image: String!, provider: String!): Token
 
         updateUser(id: ID!, data: UserInput!): User
         deleteUser(id: ID!): User

@@ -1,7 +1,7 @@
 {
     "files.exclude": {
         "node_modules": true,
-        ".babelrc": true,
+        ".dockerignore": true,
         ".gitignore": true,
         "Dockerfile": true,
         "entrypoint.sh": true,

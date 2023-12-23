@@ -1,5 +1,6 @@
 import path from "path";
-require("dotenv").config({ path: path.join(process.cwd(), ".env") });
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 export default {
     port: process.env.PORT,

@@ -1,8 +1,8 @@
-import User from "../../../models/user";
+import User from "../../../models/user/index.js";
 import { compare, hash } from "bcrypt";
 import { GraphQLError } from "graphql";
-import { jwtHelper } from "../../../utils/jwtHelper";
-import { IUser } from "../../../models/user/interface";
+import { jwtHelper } from "../../../utils/jwtHelper.js";
+import { IUser } from "../../../models/user/interface.js";
 
 interface Login {
     email: string;

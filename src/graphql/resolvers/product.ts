@@ -1,6 +1,6 @@
-import { categoryLoader } from "../../dataLoaders/product/categoryLoader";
-import { userLoader } from "../../dataLoaders/userLoader";
-import { bookingLoader } from "../../dataLoaders/product/isBookingLoader";
+import { categoryLoader } from "../../dataLoaders/product/categoryLoader.js";
+import { userLoader } from "../../dataLoaders/userLoader.js";
+import { bookingLoader } from "../../dataLoaders/product/isBookingLoader.js";
 
 export const Product = {
     category: async ({ category }: { category: string }) => categoryLoader.load(category),

@@ -1,13 +1,13 @@
-import { Query } from "./query";
-import { Auth } from "./mutation/auth";
-import { UserMutation } from "./mutation/user";
-import { CategoryMutation } from "./mutation/category";
-import { ProductMutation } from "./mutation/product";
-import { BookingMutation } from "./mutation/booking";
-import { User } from "./user";
-import { Product } from "./product";
-import { Booking } from "./booking";
-import { Category } from "./category";
+import { Query } from "./query.js";
+import { Auth } from "./mutation/auth.js";
+import { UserMutation } from "./mutation/user.js";
+import { CategoryMutation } from "./mutation/category.js";
+import { ProductMutation } from "./mutation/product.js";
+import { BookingMutation } from "./mutation/booking.js";
+import { User } from "./user.js";
+import { Product } from "./product.js";
+import { Booking } from "./booking.js";
+import { Category } from "./category.js";
 
 export const resolvers = {
     Query,

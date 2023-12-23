@@ -1,6 +1,6 @@
 import { Document, Model, Types } from "mongoose";
-import { IUser } from "../user/interface";
-import { IProduct } from "../product/interface";
+import { IUser } from "../user/interface.js";
+import { IProduct } from "../product/interface.js";
 
 export interface IBooking extends Document {
     date: string;

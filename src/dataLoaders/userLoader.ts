@@ -1,6 +1,6 @@
 import DataLoader from "dataloader";
-import { IUser } from "../models/user/interface";
-import User from "../models/user";
+import { IUser } from "../models/user/interface.js";
+import User from "../models/user/index.js";
 
 const batchUsers = async (ids: string[]): Promise<IUser[]> => {
     const users = await User.find({ _id: { $in: ids } });

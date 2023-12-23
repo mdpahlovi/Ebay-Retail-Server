@@ -1,8 +1,8 @@
-import User from "../../models/user";
-import Category from "../../models/category";
-import Product from "../../models/product";
-import Booking from "../../models/booking";
-import { Token } from "../../types";
+import User from "../../models/user/index.js";
+import Category from "../../models/category/index.js";
+import Product from "../../models/product/index.js";
+import Booking from "../../models/booking/index.js";
+import { Token } from "../../types/index.js";
 
 export const Query = {
     allBuyer: async () => await User.find({ role: "buyer" }),

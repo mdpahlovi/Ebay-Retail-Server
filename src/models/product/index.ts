@@ -1,5 +1,5 @@
 import mongoose, { InferSchemaType, Schema } from "mongoose";
-import { IProduct, ProductModel } from "./interface";
+import { IProduct, ProductModel } from "./interface.js";
 const { ObjectId } = mongoose.Schema.Types;
 
 const productSchema = new Schema<IProduct>(

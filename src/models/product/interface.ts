@@ -1,6 +1,6 @@
 import { Document, Model, Types } from "mongoose";
-import { IUser } from "../user/interface";
-import { ICategory } from "../category/interface";
+import { IUser } from "../user/interface.js";
+import { ICategory } from "../category/interface.js";
 
 export interface IProduct extends Document {
     category: Types.ObjectId | ICategory;

@@ -1,6 +1,6 @@
-import { IUser } from "../../models/user/interface";
-import Product from "../../models/product";
-import booking from "../../models/booking";
+import { IUser } from "../../models/user/interface.js";
+import Product from "../../models/product/index.js";
+import booking from "../../models/booking/index.js";
 
 export const User = {
     totalProduct: async ({ _id, role }: IUser) => {

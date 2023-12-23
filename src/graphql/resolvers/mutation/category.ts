@@ -1,6 +1,6 @@
-import Category from "../../../models/category";
-import { Delete, Update } from "../../../types";
-import { uploadImage } from "../../../utils/uploadImage";
+import Category from "../../../models/category/index.js";
+import { Delete, Update } from "../../../types/index.js";
+import { uploadImage } from "../../../utils/uploadImage.js";
 
 interface Category {
     name: string;

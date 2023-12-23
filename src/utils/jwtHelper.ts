@@ -1,7 +1,7 @@
 import jwt, { Secret } from "jsonwebtoken";
-import config from "../config";
-import { JwtPayload } from "../types";
-import { IUser } from "../models/user/interface";
+import config from "../config/index.js";
+import { JwtPayload } from "../types/index.js";
+import { IUser } from "../models/user/interface.js";
 
 const encodeToken = (payload: IUser) => {
     const secret = config.jwt.secret as Secret;

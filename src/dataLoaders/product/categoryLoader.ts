@@ -1,6 +1,6 @@
 import DataLoader from "dataloader";
-import { ICategory } from "../../models/category/interface";
-import Category from "../../models/category";
+import { ICategory } from "../../models/category/interface.js";
+import Category from "../../models/category/index.js";
 
 const batchCategories = async (ids: string[]): Promise<ICategory[]> => {
     const categories = await Category.find({ _id: { $in: ids } });

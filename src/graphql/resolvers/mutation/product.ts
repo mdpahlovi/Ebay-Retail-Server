@@ -1,6 +1,6 @@
-import Product from "../../../models/product";
-import { Delete, Token, Update } from "../../../types";
-import { uploadImage } from "../../../utils/uploadImage";
+import Product from "../../../models/product/index.js";
+import { Delete, Token, Update } from "../../../types/index.js";
+import { uploadImage } from "../../../utils/uploadImage.js";
 
 interface Product {
     category: string;

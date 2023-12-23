@@ -1,5 +1,5 @@
 import DataLoader from "dataloader";
-import Booking from "../../models/booking";
+import Booking from "../../models/booking/index.js";
 
 const batchBookings = async (ids: string[]): Promise<boolean[]> => {
     const bookings = await Booking.find({ product: { $in: ids } }, "product");

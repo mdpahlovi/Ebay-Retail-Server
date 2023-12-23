@@ -3,16 +3,13 @@
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
+    "type": "module",
     "scripts": {
         "build": "tsc",
-        "start": "nodemon --exec babel-node -- ./dist"
+        "start": "nodemon ./dist"
     },
     "dependencies": {
         "@apollo/server": "^4.9.5",
-        "@babel/cli": "^7.23.4",
-        "@babel/core": "^7.23.6",
-        "@babel/node": "^7.22.19",
-        "@babel/preset-env": "^7.23.6",
         "@types/bcrypt": "^5.0.2",
         "@types/body-parser": "^1.19.5",
         "@types/cookie-parser": "^1.4.6",

@@ -1,5 +1,5 @@
-import { userLoader } from "../../dataLoaders/userLoader";
-import { productLoader } from "../../dataLoaders/booking/productLoader";
+import { userLoader } from "../../dataLoaders/userLoader.js";
+import { productLoader } from "../../dataLoaders/booking/productLoader.js";
 
 export const Booking = {
     buyer: async ({ buyer }: { buyer: string }) => await userLoader.load(buyer),

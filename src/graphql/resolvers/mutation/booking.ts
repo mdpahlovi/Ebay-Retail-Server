@@ -1,5 +1,5 @@
-import Booking from "../../../models/booking";
-import { Delete, Token, Update } from "../../../types";
+import Booking from "../../../models/booking/index.js";
+import { Delete, Token, Update } from "../../../types/index.js";
 
 interface Booking {
     date: string;

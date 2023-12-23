@@ -1,6 +1,6 @@
-import User from "../../../models/user";
-import { Delete, Update } from "../../../types";
-import { uploadImage } from "../../../utils/uploadImage";
+import User from "../../../models/user/index.js";
+import { Delete, Update } from "../../../types/index.js";
+import { uploadImage } from "../../../utils/uploadImage.js";
 
 interface User {
     name: string;

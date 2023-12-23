@@ -2,20 +2,20 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 
-import config from "./config";
 import express from "express";
 import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import config from "./config/index.js";
 import cookieParser from "cookie-parser";
 import { v2 as cloudinary } from "cloudinary";
 
-import { Token } from "./types";
-import { typeDefs } from "./graphql/schemas";
-import { resolvers } from "./graphql/resolvers";
-import { jwtHelper } from "./utils/jwtHelper";
-import corsOptions from "./utils/corsOptions";
+import { Token } from "./types/index.js";
+import { typeDefs } from "./graphql/schemas/index.js";
+import { resolvers } from "./graphql/resolvers/index.js";
+import { jwtHelper } from "./utils/jwtHelper.js";
+import corsOptions from "./utils/corsOptions.js";
 
 const app = express();
 const httpServer = http.createServer(app);

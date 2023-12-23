@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { BookingModel, IBooking } from "./interface";
+import { BookingModel, IBooking } from "./interface.js";
 const { ObjectId } = mongoose.Schema.Types;
 
 const bookingSchema = new Schema<IBooking>(

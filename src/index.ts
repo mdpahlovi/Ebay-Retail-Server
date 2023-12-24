@@ -9,9 +9,9 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import config from "./config/index.js";
 import cookieParser from "cookie-parser";
+import authorizeToken from "./modules/auth.js";
 import { v2 as cloudinary } from "cloudinary";
 
-import { Token } from "./types/index.js";
 import { typeDefs } from "./graphql/schemas/index.js";
 import { resolvers } from "./graphql/resolvers/index.js";
 import { jwtHelper } from "./utils/jwtHelper.js";
@@ -29,25 +29,25 @@ const bootstrap = async () => {
     await server.start();
     await mongoose.connect(config.mongodb_url!);
 
+    // Middlewares
+    app.use(cors(corsOptions));
+    app.use(cookieParser());
+    app.use(express.json());
+    app.use(bodyParser.json({ limit: "64mb" }));
+    app.use(authorizeToken);
+
     cloudinary.config({ cloud_name: config.cloud.name, api_key: config.cloud.api_key, api_secret: config.cloud.api_secret });
 
     app.use(
-        "/graphql",
-        express.json(),
-        cookieParser(),
-        cors(corsOptions),
-        bodyParser.json({ limit: "64mb" }),
         expressMiddleware(server, {
-            context: async ({ req, res }): Promise<Token> => {
-                const cookie = req.cookies["ebay-retail-auth"];
-                const token = await jwtHelper.decodeToken(cookie ? cookie : "");
-                return { token };
+            context: async ({ req, res }) => {
+                const token = await jwtHelper.decodeToken(req);
+                return { token, res };
             },
         })
     );
 
-    await new Promise<void>((resolve) => httpServer.listen({ port: config.port }, resolve));
-    console.log(`🚀 Server ready at http://localhost:${config.port}/graphql`);
+    app.listen({ port: config.port }, () => console.log(`🚀 Server ready at http://localhost:${config.port}`));
 };
 
 bootstrap();

@@ -52,10 +52,6 @@ export const typeDefs = `#graphql
         updatedAt: String
     }
 
-    type Token {
-        token: String
-    }
-
     type Query {
         allBuyer: [User]
         allSeller: [User] 
@@ -73,9 +69,9 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
-        login(email: String!, password: String!): Token
-        register(name: String!, email: String!, password: String!): Token
-        socialLogin(name: String!, email: String!, image: String!, provider: String!): Token
+        login(email: String!, password: String!): User
+        register(name: String!, email: String!, password: String!): User
+        socialLogin(name: String!, email: String!, image: String!, provider: String!): User
 
         updateUser(id: ID!, data: UserInput!): User
         deleteUser(id: ID!): User

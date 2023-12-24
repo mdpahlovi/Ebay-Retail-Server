@@ -12,9 +12,9 @@ interface User {
 
 export const UserMutation = {
     updateUser: async (parent: any, { id, data }: Update<User>) => {
-        if (data?.image) data.image = await uploadImage(data.image, "Product");
-        const user = await User.findByIdAndUpdate(id, data, { new: true });
-        return user;
+        const user = await User.findById(id, { image: 1 });
+        if (data?.image !== user?.image) data.image = await uploadImage(data.image, "User");
+        return await User.findByIdAndUpdate(id, data, { new: true });
     },
     deleteUser: async (parent: any, { id }: Delete) => {
         const user = await User.findByIdAndDelete(id);

@@ -22,7 +22,8 @@ export const ProductMutation = {
         return await newProduct.save();
     },
     updateProduct: async (parent: any, { id, data }: Update<Product>) => {
-        if (data?.image) data.image = await uploadImage(data.image, "Product");
+        const product = await Product.findById(id, { image: 1 });
+        if (data?.image !== product?.image) data.image = await uploadImage(data.image, "Product");
         return await Product.findByIdAndUpdate(id, data, { new: true });
     },
     deleteProduct: async (parent: any, { id }: Delete) => await Product.findByIdAndDelete(id),

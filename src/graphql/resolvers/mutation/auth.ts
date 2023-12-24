@@ -4,14 +4,17 @@ import { GraphQLError } from "graphql";
 import { jwtHelper } from "../../../utils/jwtHelper.js";
 import { IUser } from "../../../models/user/interface.js";
 import { CookieOptions, Response } from "express";
+import { JwtPayload, Token } from "../../../types/index.js";
+import { uploadImage } from "../../../utils/uploadImage.js";
 
 type Login = { email: string; password: string };
 type Register = { name: string; email: string; password: string };
-type SocialLogin = { name: String; email: String; image: String; provider: String };
+type SocialLogin = { name: string; email: string; image: string; provider: string };
+type Profile = { name: string; phone: string; image: string };
 
 const options: CookieOptions = {
     domain: "ebay-retail.vercel.app",
-    sameSite: false,
+    sameSite: "lax",
     secure: true,
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 * 7,
@@ -52,6 +55,15 @@ export const Auth = {
 
         const token = jwtHelper.encodeToken(user);
         res.cookie("ebay-retail-auth", token, options);
+        return user;
+    },
+    profile: async (parent: any, args: Profile, { token, res }: { token: JwtPayload; res: Response }) => {
+        if (args.image !== token.image) args.image = await uploadImage(args.image, "User");
+        const user = await User.findByIdAndUpdate(token.id, args, { new: true });
+
+        const newToken = jwtHelper.encodeToken(user);
+        // @ts-ignore
+        res.cookie("ebay-retail-auth", newToken, { ...options, overwrite: true });
         return user;
     },
 };

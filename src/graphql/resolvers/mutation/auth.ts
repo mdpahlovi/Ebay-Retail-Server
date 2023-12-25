@@ -14,6 +14,7 @@ type Profile = { name: string; phone: string; image: string };
 
 const options: CookieOptions = {
     domain: "ebay-retail.vercel.app",
+    path: "/",
     sameSite: "none",
     secure: true,
     httpOnly: true,

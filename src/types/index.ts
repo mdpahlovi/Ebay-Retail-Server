@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { PubSub } from "graphql-subscriptions";
 
 export type JwtPayload = {
     id: string;
@@ -11,8 +12,9 @@ export type JwtPayload = {
 } | null;
 
 export type Context = {
-    res: Response;
     token: JwtPayload | null;
+    pubsub: PubSub;
+    res: Response;
 };
 
 export type Update<T> = {

@@ -2,8 +2,12 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 
+import { createServer } from "http";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/lib/use/ws";
+
 import express from "express";
-import http from "http";
 import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -14,40 +18,48 @@ import { v2 as cloudinary } from "cloudinary";
 
 import { typeDefs } from "./graphql/schemas/index.js";
 import { resolvers } from "./graphql/resolvers/index.js";
-import { jwtHelper } from "./utils/jwtHelper.js";
+import { context } from "./graphql/context/index.js";
 import corsOptions from "./utils/corsOptions.js";
 
 const app = express();
-const httpServer = http.createServer(app);
+const httpServer = createServer(app);
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+const wsServer = new WebSocketServer({ server: httpServer, path: "/subscription" });
+const serverCleanup = useServer({ schema }, wsServer);
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    schema,
+    plugins: [
+        ApolloServerPluginDrainHttpServer({ httpServer }),
+        {
+            async serverWillStart() {
+                return {
+                    async drainServer() {
+                        await serverCleanup.dispose();
+                    },
+                };
+            },
+        },
+    ],
 });
 
-const bootstrap = async () => {
-    await server.start();
-    await mongoose.connect(config.mongodb_url!);
+const {
+    mongodb_url,
+    cloud: { cloud_name, api_key, api_secret },
+    port,
+} = config;
 
-    // Middlewares
-    app.use(cors(corsOptions));
-    app.use(cookieParser());
-    app.use(express.json());
-    app.use(bodyParser.json({ limit: "64mb" }));
-    app.use(authorizeToken);
+await server.start();
+await mongoose.connect(mongodb_url!);
 
-    cloudinary.config({ cloud_name: config.cloud.name, api_key: config.cloud.api_key, api_secret: config.cloud.api_secret });
+// Middlewares
+app.use(cors(corsOptions));
+app.use(cookieParser());
+app.use(express.json());
+app.use(bodyParser.json({ limit: "64mb" }));
+app.use(authorizeToken);
 
-    app.use(
-        expressMiddleware(server, {
-            context: async ({ req, res }) => {
-                const token = await jwtHelper.decodeToken(req);
-                return { token, res };
-            },
-        })
-    );
+cloudinary.config({ cloud_name, api_key, api_secret });
 
-    app.listen({ port: config.port }, () => console.log(`🚀 Server Ready At http://localhost:${config.port}`));
-};
+app.use("/graphql", expressMiddleware(server, { context }));
 
-bootstrap();
+httpServer.listen(port, () => console.log(`🚀 Server Running On http://localhost:${port}/graphql`));

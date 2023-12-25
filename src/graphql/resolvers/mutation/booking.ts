@@ -1,5 +1,5 @@
 import Booking from "../../../models/booking/index.js";
-import { Delete, Token, Update } from "../../../types/index.js";
+import { Delete, Context, Update } from "../../../types/index.js";
 
 interface Booking {
     date: string;
@@ -9,7 +9,7 @@ interface Booking {
 }
 
 export const BookingMutation = {
-    createBooking: async (parent: any, args: Booking, { token }: Token) => {
+    createBooking: async (parent: any, args: Booking, { token }: Context) => {
         const newBooking = new Booking({ ...args, buyer: token.id });
         return await newBooking.save();
     },

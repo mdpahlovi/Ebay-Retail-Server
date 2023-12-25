@@ -1,3 +1,5 @@
+import { Response } from "express";
+
 export type JwtPayload = {
     id: string;
     name: string;
@@ -8,7 +10,8 @@ export type JwtPayload = {
     isVerify: boolean;
 } | null;
 
-export type Token = {
+export type Context = {
+    res: Response;
     token: JwtPayload | null;
 };
 

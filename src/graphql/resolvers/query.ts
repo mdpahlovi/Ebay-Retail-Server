@@ -2,7 +2,7 @@ import User from "../../models/user/index.js";
 import Category from "../../models/category/index.js";
 import Product from "../../models/product/index.js";
 import Booking from "../../models/booking/index.js";
-import { Token } from "../../types/index.js";
+import { Context } from "../../types/index.js";
 
 export const Query = {
     allBuyer: async () => await User.find({ role: "buyer" }),
@@ -12,11 +12,11 @@ export const Query = {
     categories: async () => await Category.find({}),
     category: async (parent: any, { id }: { id: string }) => await Category.findById(id),
 
-    products: async (parent: any, args: any, { token }: Token) => await Product.find({ seller: token?.id }),
+    products: async (parent: any, args: any, { token }: Context) => await Product.find({ seller: token?.id }),
     product: async (parent: any, { id }: { id: string }) => await Product.findById(id),
     advertise: async () => await Product.find({ advertised: true }),
 
-    bookings: async (parent: any, args: any, { token }: Token) => {
+    bookings: async (parent: any, args: any, { token }: Context) => {
         switch (token?.role) {
             case "buyer":
                 return await Booking.find({ buyer: token?.id });

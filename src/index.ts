@@ -47,7 +47,7 @@ const bootstrap = async () => {
         })
     );
 
-    app.listen({ port: config.port }, () => console.log(`🚀 Server ready at http://localhost:${config.port}`));
+    app.listen({ port: config.port }, () => console.log(`🚀 Server Ready At http://localhost:${config.port}`));
 };
 
 bootstrap();

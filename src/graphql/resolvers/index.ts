@@ -4,6 +4,7 @@ import { UserMutation } from "./mutation/user.js";
 import { CategoryMutation } from "./mutation/category.js";
 import { ProductMutation } from "./mutation/product.js";
 import { BookingMutation } from "./mutation/booking.js";
+import { MessageMutation } from "./mutation/message.js";
 import { User } from "./user.js";
 import { Product } from "./product.js";
 import { Booking } from "./booking.js";
@@ -17,6 +18,7 @@ export const resolvers = {
         ...CategoryMutation,
         ...ProductMutation,
         ...BookingMutation,
+        ...MessageMutation,
     },
     User,
     Product,

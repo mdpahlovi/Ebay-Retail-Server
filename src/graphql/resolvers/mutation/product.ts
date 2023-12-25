@@ -1,5 +1,5 @@
 import Product from "../../../models/product/index.js";
-import { Delete, Token, Update } from "../../../types/index.js";
+import { Delete, Context, Update } from "../../../types/index.js";
 import { uploadImage } from "../../../utils/uploadImage.js";
 
 interface Product {
@@ -15,7 +15,7 @@ interface Product {
 }
 
 export const ProductMutation = {
-    createProduct: async (parent: any, args: Product, { token }: Token) => {
+    createProduct: async (parent: any, args: Product, { token }: Context) => {
         if (args?.image) args.image = await uploadImage(args.image, "Product");
         const data = { ...args, seller: token?.id };
         const newProduct = new Product(data);

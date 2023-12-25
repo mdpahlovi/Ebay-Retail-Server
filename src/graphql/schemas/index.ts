@@ -41,6 +41,14 @@ export const typeDefs = `#graphql
         updatedAt: String
     }
 
+    type Message{
+        id: ID
+        user: String
+        type: String
+        content: String
+        createdAt: String
+    }
+
     type Booking {
         id: ID
         date: String
@@ -48,6 +56,7 @@ export const typeDefs = `#graphql
         buyer: User
         seller: User
         product: Product
+        messages: [Message]
         createdAt: String
         updatedAt: String
     }
@@ -88,6 +97,8 @@ export const typeDefs = `#graphql
         createBooking(date: String!, location: String!, seller: String!, product: String!): Booking
         updateBooking(id: ID!, data: BookingInput!): Booking
         deleteBooking(id: ID!): Booking
+
+        createMessage(id: ID!, type: String!, content: String!): Booking
     }
 
     input UserInput{

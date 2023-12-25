@@ -12,7 +12,7 @@ const encodeToken = (payload: IUser) => {
 
 const decodeToken = async (req: Request): Promise<JwtPayload | null> => {
     const secret = config.jwt.secret as Secret;
-    const token = req.cookies["ebay-retail-auth"];
+    const token = req.headers.authorization || "";
 
     try {
         return jwt.verify(token, secret) as JwtPayload;

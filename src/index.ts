@@ -12,8 +12,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import config from "./config/index.js";
-import cookieParser from "cookie-parser";
-import authorizeToken from "./modules/auth.js";
 import { v2 as cloudinary } from "cloudinary";
 
 import { typeDefs } from "./graphql/schemas/index.js";
@@ -42,24 +40,12 @@ const server = new ApolloServer({
     ],
 });
 
-const {
-    mongodb_url,
-    cloud: { cloud_name, api_key, api_secret },
-    port,
-} = config;
-
 await server.start();
-await mongoose.connect(mongodb_url!);
+await mongoose.connect(config.mongodb_url!);
 
-// Middlewares
-app.use(cors(corsOptions));
-app.use(cookieParser());
-app.use(express.json());
-app.use(bodyParser.json({ limit: "64mb" }));
-app.use(authorizeToken);
-
+const { cloud_name, api_key, api_secret } = config.cloud;
 cloudinary.config({ cloud_name, api_key, api_secret });
 
-app.use("/graphql", expressMiddleware(server, { context }));
+app.use("/graphql", cors(corsOptions), express.json(), bodyParser.json({ limit: "64mb" }), expressMiddleware(server, { context }));
 
-httpServer.listen(port, () => console.log(`🚀 Server Running On http://localhost:${port}/graphql`));
+httpServer.listen(config.port, () => console.log(`🚀 Server Running On http://localhost:${config.port}/graphql`));

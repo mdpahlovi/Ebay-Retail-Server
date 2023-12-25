@@ -78,10 +78,10 @@ export const typeDefs = `#graphql
     }
 
     type Mutation {
-        login(email: String!, password: String!): User
-        register(name: String!, email: String!, password: String!): User
-        socialLogin(name: String!, email: String!, image: String!, provider: String!): User
-        profile(name: String!, phone: String!, image: String): User
+        login(email: String!, password: String!): String
+        register(name: String!, email: String!, password: String!): String
+        socialLogin(name: String!, email: String!, image: String!, provider: String!): String
+        profile(name: String!, phone: String!, image: String): String
 
         updateUser(id: ID!, data: UserInput!): User
         deleteUser(id: ID!): User
@@ -99,6 +99,10 @@ export const typeDefs = `#graphql
         deleteBooking(id: ID!): Booking
 
         createMessage(id: ID!, type: String!, content: String!): Booking
+    }
+
+    type Subscription{
+        onMessageCreated(id: ID!): Message
     }
 
     input UserInput{

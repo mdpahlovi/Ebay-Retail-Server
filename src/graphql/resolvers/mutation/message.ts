@@ -8,14 +8,21 @@ interface Message {
 }
 
 export const MessageMutation = {
-    createMessage: async (parent: any, { id, type, content }: Message, { token }: Context) => {
+    createMessage: async (parent: any, { id, type, content }: Message, { token, pubsub }: Context) => {
+        let result;
         switch (type) {
             case "text":
-                return await Booking.findByIdAndUpdate(id, { $push: { messages: { user: token?.id, content } } }, { new: true });
+                result = await Booking.findByIdAndUpdate(id, { $push: { messages: { user: token?.id, content } } }, { new: true });
+                break;
             case "image":
-                return;
+                break;
             case "audio":
-                return;
+                break;
         }
+
+        const newMessage = result.messages[result.messages.length - 1];
+        pubsub.publish(`MESSAGE_CREATE_ON_ROOM:${id}`, { message: newMessage });
+
+        return result;
     },
 };

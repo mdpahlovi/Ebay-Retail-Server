@@ -1,7 +1,6 @@
 import User from "../../../models/user/index.js";
 import { compare, hash } from "bcrypt";
 import { GraphQLError } from "graphql";
-import { CookieOptions } from "express";
 import { Context } from "../../../types/index.js";
 import { jwtHelper } from "../../../utils/jwtHelper.js";
 import { IUser } from "../../../models/user/interface.js";
@@ -12,15 +11,6 @@ type Register = { name: string; email: string; password: string };
 type SocialLogin = { name: string; email: string; image: string; provider: string };
 type Profile = { name: string; phone: string; image: string };
 
-const options: CookieOptions = {
-    domain: "ebay-retail.vercel.app",
-    path: "/",
-    sameSite: "none",
-    secure: true,
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-};
-
 export const Auth = {
     login: async (parent: any, { email, password }: Login, { res }: Context) => {
         const user = await User.findOne({ email });
@@ -28,9 +18,7 @@ export const Auth = {
         if (!user?.password || !(await compare(password, user.password)))
             throw new GraphQLError("Password doesn't match...!", { extensions: { code: "BAD_REQUEST" } });
 
-        const token = jwtHelper.encodeToken(user);
-        res.cookie("ebay-retail-auth", token, {});
-        return user;
+        return jwtHelper.encodeToken(user);
     },
     register: async (parent: any, { name, email, password }: Register, { res }: Context) => {
         const user = await User.findOne({ email });
@@ -39,9 +27,7 @@ export const Auth = {
         const newUser = new User({ name, email, password: await hash(password, 12) });
         const newUserData = await newUser.save();
 
-        const token = jwtHelper.encodeToken(newUserData);
-        res.cookie("ebay-retail-auth", token, options);
-        return newUserData;
+        return jwtHelper.encodeToken(newUserData);
     },
     socialLogin: async (parent: any, { name, email, image, provider }: SocialLogin, { res }: Context) => {
         let user: IUser;
@@ -54,17 +40,12 @@ export const Auth = {
             user = await newUser.save();
         }
 
-        const token = jwtHelper.encodeToken(user);
-        res.cookie("ebay-retail-auth", token, options);
-        return user;
+        return jwtHelper.encodeToken(user);
     },
     profile: async (parent: any, args: Profile, { token, res }: Context) => {
         if (args.image !== token.image) args.image = await uploadImage(args.image, "User");
         const user = await User.findByIdAndUpdate(token.id, args, { new: true });
 
-        const newToken = jwtHelper.encodeToken(user);
-        // @ts-ignore
-        res.cookie("ebay-retail-auth", newToken, { ...options, overwrite: true });
-        return user;
+        return jwtHelper.encodeToken(user);
     },
 };

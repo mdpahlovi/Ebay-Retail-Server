@@ -9,6 +9,7 @@ import { User } from "./user.js";
 import { Product } from "./product.js";
 import { Booking } from "./booking.js";
 import { Category } from "./category.js";
+import { Subscription } from "./subscription.js";
 
 export const resolvers = {
     Query,
@@ -24,4 +25,5 @@ export const resolvers = {
     Product,
     Booking,
     Category,
+    Subscription,
 };

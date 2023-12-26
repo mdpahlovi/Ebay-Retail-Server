@@ -1,7 +1,11 @@
-import { Context } from "../../types";
+import { withFilter } from "graphql-subscriptions";
+import { pubsub } from "../context/index.js";
 
 export const Subscription = {
-    onMessageCreated: {
-        subscribe: async (parent: any, { id }: { id: string }, { pubsub }: Context) => pubsub.asyncIterator(`MESSAGE_CREATE_ON_ROOM:${id}`),
+    messageCreated: {
+        subscribe: withFilter(
+            () => pubsub.asyncIterator(["MESSAGE_CREATE"]),
+            (payload, variables) => payload.messageCreated.id === variables.id
+        ),
     },
 };

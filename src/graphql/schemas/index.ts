@@ -101,8 +101,13 @@ export const typeDefs = `#graphql
         createMessage(id: ID!, type: String!, content: String!): Booking
     }
 
+    type MessageCreated{
+        id: ID
+        message: Message 
+    }
+
     type Subscription{
-        onMessageCreated(id: ID!): Message
+        messageCreated(id: ID!): MessageCreated
     }
 
     input UserInput{

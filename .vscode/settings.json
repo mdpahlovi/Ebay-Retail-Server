@@ -3,7 +3,6 @@
         "node_modules": true,
         ".dockerignore": true,
         ".gitignore": true,
-        "Dockerfile": true,
         "entrypoint.sh": true,
         "README.md": true,
         "tsconfig.json": true,

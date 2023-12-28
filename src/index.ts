@@ -18,6 +18,7 @@ import { typeDefs } from "./graphql/schemas/index.js";
 import { resolvers } from "./graphql/resolvers/index.js";
 import { context } from "./graphql/context/index.js";
 import corsOptions from "./utils/corsOptions.js";
+import { PaymentRoutes } from "./routes/payment.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -46,6 +47,11 @@ await mongoose.connect(config.mongodb_url!);
 const { cloud_name, api_key, api_secret } = config.cloud;
 cloudinary.config({ cloud_name, api_key, api_secret });
 
-app.use("/graphql", cors(corsOptions), express.json(), bodyParser.json({ limit: "64mb" }), expressMiddleware(server, { context }));
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(bodyParser.json({ limit: "64mb" }));
+app.use(PaymentRoutes);
+
+app.use("/graphql", expressMiddleware(server, { context }));
 
 httpServer.listen(config.port, () => console.log(`🚀 Server Running On http://localhost:${config.port}/graphql`));

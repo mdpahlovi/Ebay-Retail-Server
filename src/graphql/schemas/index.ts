@@ -6,6 +6,7 @@ export const typeDefs = `#graphql
         phone: String
         image: String
         role: String
+        address: String
         isVerify: Boolean
         totalProduct: Int
         totalBooking: Int
@@ -81,10 +82,11 @@ export const typeDefs = `#graphql
         login(email: String!, password: String!): String
         register(name: String!, email: String!, password: String!): String
         socialLogin(name: String!, email: String!, image: String!, provider: String!): String
-        profile(name: String!, phone: String!, image: String): String
+        profile(name: String!, phone: String!, image: String, address: String): String
 
         updateUser(id: ID!, data: UserInput!): User
         deleteUser(id: ID!): User
+        becomeSeller(plan: String!, name: String!, phone: String!, address: String!): String
 
         createCategory(name: String!, image: String!): Category
         updateCategory(id: ID!, data: CategoryInput!): Category
@@ -114,6 +116,7 @@ export const typeDefs = `#graphql
         name: String
         phone: String
         image: String
+        address: String
     }   
 
     input CategoryInput {

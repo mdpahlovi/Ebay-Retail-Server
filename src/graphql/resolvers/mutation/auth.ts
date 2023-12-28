@@ -9,7 +9,7 @@ import { uploadImage } from "../../../utils/uploadImage.js";
 type Login = { email: string; password: string };
 type Register = { name: string; email: string; password: string };
 type SocialLogin = { name: string; email: string; image: string; provider: string };
-type Profile = { name: string; phone: string; image: string };
+type Profile = { name: string; phone: string; image: string; address: string };
 
 export const Auth = {
     login: async (parent: any, { email, password }: Login, { res }: Context) => {

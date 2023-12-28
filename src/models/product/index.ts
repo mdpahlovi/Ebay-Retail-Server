@@ -1,4 +1,4 @@
-import mongoose, { InferSchemaType, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { IProduct, ProductModel } from "./interface.js";
 const { ObjectId } = mongoose.Schema.Types;
 
@@ -16,7 +16,7 @@ const productSchema = new Schema<IProduct>(
         seller: { type: ObjectId, ref: "user" },
         advertised: Boolean,
     },
-    { timestamps: true }
+    { timestamps: true, versionKey: false }
 );
 
 export default mongoose.model<IProduct, ProductModel>("product", productSchema);

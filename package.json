@@ -24,6 +24,7 @@
         "graphql-ws": "^5.14.3",
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.3",
+        "sslcommerz-lts": "^1.1.0",
         "typescript": "^5.3.3",
         "ws": "^8.16.0"
     },

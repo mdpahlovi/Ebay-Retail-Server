@@ -32,7 +32,7 @@ export const ProductMutation = {
     },
     advertiseProduct: async (parent: any, { id, advertised }: Advertise, { token }: Context) => {
         const payment = await Payment.findOne({ user_id: token.id });
-        if (payment.plan === "starter") {
+        if (!payment || payment?.plan === "starter") {
             throw new GraphQLError("Please Update Yor Plan");
         } else {
             return await Product.findByIdAndUpdate(id, { advertised }, { new: true });

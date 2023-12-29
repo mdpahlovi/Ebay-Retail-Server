@@ -22,7 +22,18 @@ export const Query = {
                 return await Booking.find({ buyer: token?.id });
             case "seller":
                 return await Booking.find({ seller: token?.id });
+            case "admin":
+                return await Booking.find();
         }
     },
     booking: async (parent: any, { id }: { id: string }) => await Booking.findById(id),
+
+    dashboard: async () => {
+        const fields = { totalCount: { $sum: 1 }, lastAddedAt: { $last: "$createdAt" } };
+        const category = await Category.aggregate([{ $group: { _id: "category", ...fields } }]);
+        const product = await Product.aggregate([{ $group: { _id: "product", ...fields } }]);
+        const user = await User.aggregate([{ $group: { _id: "$role", ...fields } }]);
+
+        return [...category, ...product, ...user];
+    },
 };

@@ -62,6 +62,12 @@ export const typeDefs = `#graphql
         updatedAt: String
     }
 
+    type TotalData {
+        _id: String
+        totalCount: Int
+        lastAddedAt: String
+    }
+
     type Query {
         allBuyer: [User]
         allSeller: [User] 
@@ -76,6 +82,8 @@ export const typeDefs = `#graphql
 
         bookings: [Booking]
         booking(id: ID!): Booking
+
+        dashboard: [TotalData]
     }
 
     type Mutation {
@@ -94,6 +102,7 @@ export const typeDefs = `#graphql
 
         createProduct(category: String!, name: String!, image: String!, resale_price: Float!, original_price: Float!, condition: String!, description: String!, location: String!, purchase_date: String!): Product
         updateProduct(id: ID!, data: ProductInput!): Product
+        advertiseProduct(id: ID!, advertised: Boolean!): Product
         deleteProduct(id: ID!): Product
 
         createBooking(date: String!, location: String!, seller: String!, product: String!): Booking

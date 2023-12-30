@@ -8,6 +8,7 @@ export const typeDefs = `#graphql
         role: String
         address: String
         isVerify: Boolean
+        plan: String
         totalProduct: Int
         totalBooking: Int
         createdAt: String

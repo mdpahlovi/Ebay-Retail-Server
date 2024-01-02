@@ -6,6 +6,7 @@ export default {
     port: process.env.PORT,
     server_url: process.env.SERVER_URL,
     client_url: process.env.CLIENT_URL,
+    news_api_key: process.env.NEWS_API_KEY,
     mongodb_url: process.env.MONGODB_URL,
     jwt: { secret: process.env.JWT_SECRET },
     cloud: {

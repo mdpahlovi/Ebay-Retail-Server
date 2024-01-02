@@ -19,6 +19,7 @@ import { resolvers } from "./graphql/resolvers/index.js";
 import { context } from "./graphql/context/index.js";
 import corsOptions from "./utils/corsOptions.js";
 import { PaymentRoutes } from "./routes/payment.js";
+import { NewsRoutes } from "./routes/news.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -51,6 +52,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json({ limit: "64mb" }));
 app.use(PaymentRoutes);
+app.use(NewsRoutes);
 
 app.use("/graphql", expressMiddleware(server, { context }));
 
